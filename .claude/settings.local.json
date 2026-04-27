@@ -4,6 +4,9 @@
       "Bash(git --version)",
       "Bash(brew install *)",
       "Bash(gh --version)"
+    ],
+    "additionalDirectories": [
+      "/Users/rohan.jadhav/Desktop/techdoc"
     ]
   }
 }
