@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Support Dashboard — Architecture Overview</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <style>
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -20,7 +18,7 @@
         --bg: #f5f4ef;
         --surface: #ffffff;
         --border: #e4e2d9;
-        --text: #1a1916;
+        --text: #18171a;
         --muted: #6b6a64;
         --accent: #1d3d7a;
         --accent-light: #e8edf5;
@@ -34,140 +32,204 @@
         --purple-light: #eeedfe;
         --mono: "DM Mono", monospace;
         --sans: "DM Sans", sans-serif;
+        --shadow-sm: 0 1px 4px rgba(0,0,0,0.05), 0 0 0 1px rgba(0,0,0,0.03);
+        --shadow-md: 0 6px 20px rgba(0,0,0,0.09), 0 0 0 1px rgba(0,0,0,0.03);
+        --radius: 12px;
       }
       body {
         font-family: var(--sans);
         background: var(--bg);
         color: var(--text);
         line-height: 1.6;
-        padding: 48px 24px 80px;
+        padding: 60px 24px 100px;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent) 0%, var(--purple) 50%, var(--teal) 100%);
+        z-index: 100;
       }
       .page {
-        max-width: 860px;
+        max-width: 880px;
         margin: 0 auto;
-      } /* Header */
+      }
+
+      /* Header */
       .header {
-        margin-bottom: 48px;
+        margin-bottom: 52px;
+        padding-bottom: 44px;
+        border-bottom: 1px solid var(--border);
       }
       .badge {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
         font-family: var(--mono);
         font-size: 11px;
         font-weight: 500;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        background: var(--accent-light);
+        background: transparent;
         color: var(--accent);
-        padding: 4px 10px;
-        border-radius: 4px;
-        margin-bottom: 16px;
+        border: 1px solid rgba(29, 61, 122, 0.28);
+        padding: 5px 14px 5px 10px;
+        border-radius: 100px;
+        margin-bottom: 22px;
+      }
+      .badge::before {
+        content: '';
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        flex-shrink: 0;
       }
       h1 {
-        font-size: 36px;
+        font-size: 42px;
         font-weight: 600;
-        letter-spacing: -0.02em;
-        line-height: 1.1;
-        margin-bottom: 12px;
+        letter-spacing: -0.028em;
+        line-height: 1.08;
+        margin-bottom: 16px;
+        color: var(--text);
       }
       .subtitle {
         font-size: 16px;
         color: var(--muted);
-        max-width: 560px;
+        max-width: 580px;
+        line-height: 1.7;
+        font-weight: 300;
       }
-      .divider {
-        height: 1px;
-        background: var(--border);
-        margin: 40px 0;
-      } /* Stack cards */
-      .stack {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      } /* KPI row */
+
+      /* KPI row */
       .kpi-row {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 12px;
-        margin-bottom: 40px;
+        margin-bottom: 52px;
       }
       .kpi {
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 16px;
+        border-radius: var(--radius);
+        padding: 22px 16px 20px;
         text-align: center;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+      .kpi:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
       }
       .kpi-num {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 600;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 7px;
       }
       .kpi-label {
         font-size: 12px;
         color: var(--muted);
-        margin-top: 2px;
-      } /* Section */
+        font-weight: 400;
+        letter-spacing: 0.01em;
+      }
+
+      /* Section header */
+      .section-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 20px;
+      }
       h2 {
-        font-size: 14px;
+        font-size: 11px;
         font-weight: 600;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.09em;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 16px;
-      } /* Tech row */
+        white-space: nowrap;
+      }
+      .section-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* Tech tags */
       .tech-row {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin-bottom: 40px;
+        margin-bottom: 52px;
       }
       .tag {
         font-family: var(--mono);
         font-size: 12px;
-        padding: 5px 10px;
+        padding: 6px 12px;
         border-radius: 6px;
         border: 1px solid var(--border);
         background: var(--surface);
         color: var(--text);
-      } /* Flow diagram */
+        box-shadow: var(--shadow-sm);
+        transition: border-color 0.15s ease;
+      }
+      .tag:hover {
+        border-color: #b8b6ac;
+      }
+
+      /* Flow description */
+      .flow-desc {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.8;
+        margin-bottom: 20px;
+        max-width: 720px;
+        font-weight: 300;
+      }
+
+      /* Flow diagram */
       .flow-wrap {
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 32px 24px;
-        margin-bottom: 40px;
+        border-radius: 16px;
+        padding: 36px 28px;
+        margin-bottom: 0;
         overflow-x: auto;
+        box-shadow: var(--shadow-sm);
       }
       svg text {
         font-family: var(--sans);
-      } /* Layer cards */
+      }
+
+      /* Layer cards */
       .layers {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 12px;
-        margin-bottom: 40px;
+        margin-bottom: 0;
       }
       .layer-card {
         background: var(--surface);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
+        border-left-width: 3px;
+        border-radius: var(--radius);
+        padding: 22px 20px;
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+      .layer-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-1px);
       }
       .layer-head {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 12px;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        flex-shrink: 0;
+        margin-bottom: 14px;
       }
       .layer-title {
         font-size: 14px;
         font-weight: 600;
+        color: var(--text);
       }
       .layer-list {
         list-style: none;
@@ -175,21 +237,31 @@
       .layer-list li {
         font-size: 13px;
         color: var(--muted);
-        padding: 5px 0;
+        padding: 6px 0;
         border-bottom: 1px solid var(--border);
         display: flex;
         align-items: flex-start;
         gap: 8px;
+        line-height: 1.55;
       }
       .layer-list li:last-child {
         border-bottom: none;
       }
       .layer-list li::before {
-        content: "—";
+        content: "–";
         color: var(--border);
         flex-shrink: 0;
         margin-top: 1px;
-      } /* Decision table */
+      }
+
+      /* Decision table */
+      .table-wrap {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
       table {
         width: 100%;
         border-collapse: collapse;
@@ -197,68 +269,54 @@
       }
       th {
         text-align: left;
-        padding: 10px 14px;
+        padding: 12px 18px;
         background: var(--bg);
         font-weight: 600;
-        font-size: 12px;
-        letter-spacing: 0.03em;
+        font-size: 11px;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--muted);
         border-bottom: 1px solid var(--border);
       }
       td {
-        padding: 10px 14px;
+        padding: 13px 18px;
         border-bottom: 1px solid var(--border);
         vertical-align: top;
+        line-height: 1.6;
       }
       tr:last-child td {
         border-bottom: none;
       }
-      .table-wrap {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 40px;
+      tr:hover td {
+        background: rgba(0, 0, 0, 0.012);
       }
       .hl {
         font-family: var(--mono);
-        font-size: 12px;
+        font-size: 11.5px;
         background: var(--accent-light);
         color: var(--accent);
-        padding: 2px 6px;
+        padding: 2px 7px;
         border-radius: 4px;
-      } /* Footer note */
-      .note {
-        font-size: 13px;
-        color: var(--muted);
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 16px 20px;
-        display: flex;
-        gap: 10px;
-        align-items: flex-start;
       }
-      .note-icon {
-        font-size: 16px;
-        flex-shrink: 0;
+
+      /* Divider */
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 52px 0;
       }
+
       @media (max-width: 600px) {
-        .kpi-row {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .layers {
-          grid-template-columns: 1fr;
-        }
-        h1 {
-          font-size: 26px;
-        }
+        .kpi-row { grid-template-columns: repeat(2, 1fr); }
+        .layers { grid-template-columns: 1fr; }
+        h1 { font-size: 28px; }
+        body { padding: 48px 16px 80px; }
       }
     </style>
   </head>
   <body>
     <div class="page">
+
       <header class="header">
         <div class="badge">Architecture Overview</div>
         <h1>CleverTap Support Dashboard</h1>
@@ -268,11 +326,12 @@
           with sub-200ms responses.
         </p>
       </header>
+
       <!-- KPIs -->
       <div class="kpi-row">
         <div class="kpi">
-          <div class="kpi-num">70+</div>
-          <div class="kpi-label">Concurrent users</div>
+          <div class="kpi-num">12</div>
+          <div class="kpi-label">Feature modules</div>
         </div>
         <div class="kpi">
           <div class="kpi-num">&lt;200ms</div>
@@ -287,20 +346,33 @@
           <div class="kpi-label">Caching strategy</div>
         </div>
       </div>
+
       <!-- Tech stack -->
-      <h2>Tech Stack</h2>
+      <div class="section-head">
+        <h2>Tech Stack</h2>
+        <div class="section-line"></div>
+      </div>
       <div class="tech-row">
         <span class="tag">React 19 + Vite</span>
         <span class="tag">Express + Socket.IO</span>
-        <span class="tag">MongoDB Atlas</span> <span class="tag">Redis</span>
+        <span class="tag">MongoDB Atlas</span>
+        <span class="tag">Redis</span>
         <span class="tag">BullMQ</span>
         <span class="tag">Google OAuth + JWT</span>
         <span class="tag">Google Sheets API</span>
         <span class="tag">DevRev API</span>
       </div>
+
       <div class="divider"></div>
-      <!-- Data Flow Diagram -->
-      <h2>Data Flow</h2>
+
+      <!-- Data Flow -->
+      <div class="section-head">
+        <h2>Data Flow</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="flow-desc">
+        The platform separates write and read paths entirely. External sources — DevRev's ticket API, real-time webhooks, and the team roster in Google Sheets — feed into an async job queue layer that handles all sync work in the background with automatic retry and deduplication. The read path serves every request from pre-warmed cache, keeping response times consistent regardless of what background sync activity is in progress.
+      </p>
       <div class="flow-wrap">
         <svg width="100%" viewBox="0 0 780 460" role="img">
           <title>Support Dashboard data flow diagram</title>
@@ -332,614 +404,103 @@
           <!-- External sources row -->
           <g>
             <!-- DevRev API -->
-            <rect
-              x="20"
-              y="30"
-              width="140"
-              height="52"
-              rx="8"
-              fill="#e8edf5"
-              stroke="#1d3d7a"
-              stroke-width="0.8"
-            />
-            <text
-              x="90"
-              y="51"
-              text-anchor="middle"
-              font-size="13"
-              font-weight="600"
-              fill="#1d3d7a"
-            >
-              DevRev API
-            </text>
-            <text
-              x="90"
-              y="67"
-              text-anchor="middle"
-              font-size="11"
-              fill="#4a6599"
-            >
-              Tickets · Activities
-            </text>
+            <rect x="20" y="30" width="140" height="52" rx="8" fill="#e8edf5" stroke="#1d3d7a" stroke-width="0.8" />
+            <text x="90" y="51" text-anchor="middle" font-size="13" font-weight="600" fill="#1d3d7a">DevRev API</text>
+            <text x="90" y="67" text-anchor="middle" font-size="11" fill="#4a6599">Tickets · Activities</text>
             <!-- Google Sheets -->
-            <rect
-              x="20"
-              y="110"
-              width="140"
-              height="52"
-              rx="8"
-              fill="#e1f5ee"
-              stroke="#0f6e56"
-              stroke-width="0.8"
-            />
-            <text
-              x="90"
-              y="131"
-              text-anchor="middle"
-              font-size="13"
-              font-weight="600"
-              fill="#0f6e56"
-            >
-              Google Sheets
-            </text>
-            <text
-              x="90"
-              y="147"
-              text-anchor="middle"
-              font-size="11"
-              fill="#3a7a64"
-            >
-              Team roster
-            </text>
+            <rect x="20" y="110" width="140" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.8" />
+            <text x="90" y="131" text-anchor="middle" font-size="13" font-weight="600" fill="#0f6e56">Google Sheets</text>
+            <text x="90" y="147" text-anchor="middle" font-size="11" fill="#3a7a64">Team roster</text>
             <!-- Webhooks -->
-            <rect
-              x="20"
-              y="190"
-              width="140"
-              height="52"
-              rx="8"
-              fill="#faeeda"
-              stroke="#854f0b"
-              stroke-width="0.8"
-            />
-            <text
-              x="90"
-              y="211"
-              text-anchor="middle"
-              font-size="13"
-              font-weight="600"
-              fill="#854f0b"
-            >
-              DevRev Webhooks
-            </text>
-            <text
-              x="90"
-              y="227"
-              text-anchor="middle"
-              font-size="11"
-              fill="#996620"
-            >
-              Real-time events
-            </text>
+            <rect x="20" y="190" width="140" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.8" />
+            <text x="90" y="211" text-anchor="middle" font-size="13" font-weight="600" fill="#854f0b">DevRev Webhooks</text>
+            <text x="90" y="227" text-anchor="middle" font-size="11" fill="#996620">Real-time events</text>
           </g>
-          <!-- Arrow: sources → BullMQ -->
-          <line
-            x1="161"
-            y1="56"
-            x2="218"
-            y2="120"
-            stroke="#aaa"
-            stroke-width="1"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
-          <line
-            x1="161"
-            y1="136"
-            x2="218"
-            y2="136"
-            stroke="#aaa"
-            stroke-width="1"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
-          <line
-            x1="161"
-            y1="216"
-            x2="218"
-            y2="152"
-            stroke="#aaa"
-            stroke-width="1"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
+          <!-- Arrows: sources → BullMQ -->
+          <line x1="161" y1="56" x2="218" y2="120" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" />
+          <line x1="161" y1="136" x2="218" y2="136" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" />
+          <line x1="161" y1="216" x2="218" y2="152" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" />
           <!-- BullMQ Queue block -->
-          <rect
-            x="218"
-            y="80"
-            width="160"
-            height="112"
-            rx="10"
-            fill="#f5f4ef"
-            stroke="#c2c0b6"
-            stroke-width="0.8"
-          />
-          <text
-            x="298"
-            y="102"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#1a1916"
-          >
-            BullMQ Queues
-          </text>
-          <text
-            x="298"
-            y="120"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            ticket-sync
-          </text>
-          <text
-            x="298"
-            y="136"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            historical-sync
-          </text>
-          <text
-            x="298"
-            y="152"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            analytics · roster
-          </text>
-          <text
-            x="298"
-            y="168"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            activity-sync
-          </text>
+          <rect x="218" y="80" width="160" height="112" rx="10" fill="#f5f4ef" stroke="#c2c0b6" stroke-width="0.8" />
+          <text x="298" y="102" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">BullMQ Queues</text>
+          <text x="298" y="120" text-anchor="middle" font-size="11" fill="#6b6a64">ticket-sync</text>
+          <text x="298" y="136" text-anchor="middle" font-size="11" fill="#6b6a64">historical-sync</text>
+          <text x="298" y="152" text-anchor="middle" font-size="11" fill="#6b6a64">analytics · roster</text>
+          <text x="298" y="168" text-anchor="middle" font-size="11" fill="#6b6a64">activity-sync</text>
           <!-- Arrow: BullMQ → Workers -->
-          <line
-            x1="378"
-            y1="136"
-            x2="435"
-            y2="136"
-            stroke="#888"
-            stroke-width="1.5"
-            marker-end="url(#arr)"
-          />
+          <line x1="378" y1="136" x2="435" y2="136" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" />
           <!-- Workers block -->
-          <rect
-            x="435"
-            y="80"
-            width="145"
-            height="112"
-            rx="10"
-            fill="#f5f4ef"
-            stroke="#c2c0b6"
-            stroke-width="0.8"
-          />
-          <text
-            x="508"
-            y="102"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#1a1916"
-          >
-            Workers
-          </text>
-          <text
-            x="508"
-            y="120"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            Fetch + transform
-          </text>
-          <text
-            x="508"
-            y="136"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            Retry w/ backoff
-          </text>
-          <text
-            x="508"
-            y="152"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            Progress via pub/sub
-          </text>
-          <text
-            x="508"
-            y="168"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            Deduplication
-          </text>
+          <rect x="435" y="80" width="145" height="112" rx="10" fill="#f5f4ef" stroke="#c2c0b6" stroke-width="0.8" />
+          <text x="508" y="102" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Workers</text>
+          <text x="508" y="120" text-anchor="middle" font-size="11" fill="#6b6a64">Fetch + transform</text>
+          <text x="508" y="136" text-anchor="middle" font-size="11" fill="#6b6a64">Retry w/ backoff</text>
+          <text x="508" y="152" text-anchor="middle" font-size="11" fill="#6b6a64">Progress via pub/sub</text>
+          <text x="508" y="168" text-anchor="middle" font-size="11" fill="#6b6a64">Deduplication</text>
           <!-- Arrow: Workers → Redis -->
-          <line
-            x1="580"
-            y1="100"
-            x2="635"
-            y2="72"
-            stroke="#888"
-            stroke-width="1.5"
-            marker-end="url(#arr)"
-          />
+          <line x1="580" y1="100" x2="635" y2="72" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" />
           <!-- Arrow: Workers → MongoDB -->
-          <line
-            x1="580"
-            y1="172"
-            x2="635"
-            y2="200"
-            stroke="#888"
-            stroke-width="1.5"
-            marker-end="url(#arr)"
-          />
+          <line x1="580" y1="172" x2="635" y2="200" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" />
           <!-- Redis block -->
-          <rect
-            x="635"
-            y="30"
-            width="130"
-            height="72"
-            rx="10"
-            fill="#eeedfe"
-            stroke="#534ab7"
-            stroke-width="0.8"
-          />
-          <text
-            x="700"
-            y="54"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#3c3489"
-          >
-            Redis Cache
-          </text>
-          <text
-            x="700"
-            y="70"
-            text-anchor="middle"
-            font-size="11"
-            fill="#534ab7"
-          >
-            Raw string · Hash
-          </text>
-          <text
-            x="700"
-            y="85"
-            text-anchor="middle"
-            font-size="11"
-            fill="#534ab7"
-          >
-            Pub/Sub · Locks
-          </text>
+          <rect x="635" y="30" width="130" height="72" rx="10" fill="#eeedfe" stroke="#534ab7" stroke-width="0.8" />
+          <text x="700" y="54" text-anchor="middle" font-size="13" font-weight="600" fill="#3c3489">Redis Cache</text>
+          <text x="700" y="70" text-anchor="middle" font-size="11" fill="#534ab7">Raw string · Hash</text>
+          <text x="700" y="85" text-anchor="middle" font-size="11" fill="#534ab7">Pub/Sub · Locks</text>
           <!-- MongoDB block -->
-          <rect
-            x="635"
-            y="168"
-            width="130"
-            height="72"
-            rx="10"
-            fill="#faece7"
-            stroke="#993c1d"
-            stroke-width="0.8"
-          />
-          <text
-            x="700"
-            y="192"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#993c1d"
-          >
-            MongoDB
-          </text>
-          <text
-            x="700"
-            y="208"
-            text-anchor="middle"
-            font-size="11"
-            fill="#993c1d"
-          >
-            AnalyticsTicket
-          </text>
-          <text
-            x="700"
-            y="223"
-            text-anchor="middle"
-            font-size="11"
-            fill="#993c1d"
-          >
-            Aggregation · TTL
-          </text>
+          <rect x="635" y="168" width="130" height="72" rx="10" fill="#faece7" stroke="#993c1d" stroke-width="0.8" />
+          <text x="700" y="192" text-anchor="middle" font-size="13" font-weight="600" fill="#993c1d">MongoDB</text>
+          <text x="700" y="208" text-anchor="middle" font-size="11" fill="#993c1d">AnalyticsTicket</text>
+          <text x="700" y="223" text-anchor="middle" font-size="11" fill="#993c1d">Aggregation · TTL</text>
           <!-- Divider line -->
-          <line
-            x1="20"
-            y1="290"
-            x2="760"
-            y2="290"
-            stroke="#e4e2d9"
-            stroke-width="1"
-            stroke-dasharray="6 4"
-          />
-          <text
-            x="390"
-            y="283"
-            text-anchor="middle"
-            font-size="11"
-            fill="#aaa9a2"
-          >
-            READ PATH
-          </text>
+          <line x1="20" y1="290" x2="760" y2="290" stroke="#e4e2d9" stroke-width="1" stroke-dasharray="6 4" />
+          <text x="390" y="283" text-anchor="middle" font-size="11" fill="#aaa9a2">READ PATH</text>
           <!-- Express API block -->
-          <rect
-            x="218"
-            y="320"
-            width="160"
-            height="72"
-            rx="10"
-            fill="#f5f4ef"
-            stroke="#c2c0b6"
-            stroke-width="0.8"
-          />
-          <text
-            x="298"
-            y="346"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#1a1916"
-          >
-            Express API
-          </text>
-          <text
-            x="298"
-            y="362"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            REST routes · Auth
-          </text>
-          <text
-            x="298"
-            y="378"
-            text-anchor="middle"
-            font-size="11"
-            fill="#6b6a64"
-          >
-            Rate limiting · Zod
-          </text>
+          <rect x="218" y="320" width="160" height="72" rx="10" fill="#f5f4ef" stroke="#c2c0b6" stroke-width="0.8" />
+          <text x="298" y="346" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1916">Express API</text>
+          <text x="298" y="362" text-anchor="middle" font-size="11" fill="#6b6a64">REST routes · Auth</text>
+          <text x="298" y="378" text-anchor="middle" font-size="11" fill="#6b6a64">Rate limiting · Zod</text>
           <!-- Socket.IO block -->
-          <rect
-            x="218"
-            y="410"
-            width="160"
-            height="44"
-            rx="10"
-            fill="#e1f5ee"
-            stroke="#0f6e56"
-            stroke-width="0.8"
-          />
-          <text
-            x="298"
-            y="430"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#0f6e56"
-          >
-            Socket.IO
-          </text>
-          <text
-            x="298"
-            y="447"
-            text-anchor="middle"
-            font-size="11"
-            fill="#3a7a64"
-          >
-            Live push to browsers
-          </text>
+          <rect x="218" y="410" width="160" height="44" rx="10" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.8" />
+          <text x="298" y="430" text-anchor="middle" font-size="13" font-weight="600" fill="#0f6e56">Socket.IO</text>
+          <text x="298" y="447" text-anchor="middle" font-size="11" fill="#3a7a64">Live push to browsers</text>
           <!-- Arrow: Redis → Express -->
-          <line
-            x1="635"
-            y1="56"
-            x2="580"
-            y2="340"
-            stroke="#7f77dd"
-            stroke-width="1.5"
-            stroke-dasharray="5 3"
-            marker-end="url(#arr)"
-          />
+          <line x1="635" y1="56" x2="580" y2="340" stroke="#7f77dd" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)" />
           <!-- Arrow: MongoDB → Express -->
-          <line
-            x1="635"
-            y1="200"
-            x2="580"
-            y2="356"
-            stroke="#d85a30"
-            stroke-width="1.5"
-            stroke-dasharray="5 3"
-            marker-end="url(#arr)"
-          />
+          <line x1="635" y1="200" x2="580" y2="356" stroke="#d85a30" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arr)" />
           <!-- Arrow: pub/sub → Socket.IO -->
-          <line
-            x1="635"
-            y1="88"
-            x2="380"
-            y2="424"
-            stroke="#0f6e56"
-            stroke-width="1.2"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
+          <line x1="635" y1="88" x2="380" y2="424" stroke="#0f6e56" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)" />
           <!-- Arrow: Express → Browser -->
-          <line
-            x1="218"
-            y1="356"
-            x2="161"
-            y2="356"
-            stroke="#888"
-            stroke-width="1.5"
-            marker-end="url(#arr)"
-          />
+          <line x1="218" y1="356" x2="161" y2="356" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" />
           <!-- Arrow: Socket.IO → Browser -->
-          <line
-            x1="218"
-            y1="432"
-            x2="161"
-            y2="432"
-            stroke="#0f6e56"
-            stroke-width="1.2"
-            marker-end="url(#arr)"
-          />
+          <line x1="218" y1="432" x2="161" y2="432" stroke="#0f6e56" stroke-width="1.2" marker-end="url(#arr)" />
           <!-- Browser block -->
-          <rect
-            x="20"
-            y="318"
-            width="140"
-            height="168"
-            rx="10"
-            fill="#e8edf5"
-            stroke="#1d3d7a"
-            stroke-width="0.8"
-          />
-          <text
-            x="90"
-            y="344"
-            text-anchor="middle"
-            font-size="13"
-            font-weight="600"
-            fill="#1d3d7a"
-          >
-            Browser
-          </text>
-          <text
-            x="90"
-            y="362"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            React 19 + Vite
-          </text>
-          <text
-            x="90"
-            y="380"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            Zustand store
-          </text>
-          <text
-            x="90"
-            y="396"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            Socket.IO client
-          </text>
-          <text
-            x="90"
-            y="414"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            70+ users
-          </text>
-          <text
-            x="90"
-            y="432"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            &lt;200ms loads
-          </text>
-          <text
-            x="90"
-            y="468"
-            text-anchor="middle"
-            font-size="11"
-            fill="#4a6599"
-          >
-            ↗ REST ↗ WS
-          </text>
+          <rect x="20" y="318" width="140" height="158" rx="10" fill="#e8edf5" stroke="#1d3d7a" stroke-width="0.8" />
+          <text x="90" y="344" text-anchor="middle" font-size="13" font-weight="600" fill="#1d3d7a">Browser</text>
+          <text x="90" y="364" text-anchor="middle" font-size="11" fill="#4a6599">React 19 + Vite</text>
+          <text x="90" y="383" text-anchor="middle" font-size="11" fill="#4a6599">Zustand store</text>
+          <text x="90" y="402" text-anchor="middle" font-size="11" fill="#4a6599">Socket.IO client</text>
+          <text x="90" y="423" text-anchor="middle" font-size="11" fill="#4a6599">&lt;200ms loads</text>
+          <text x="90" y="456" text-anchor="middle" font-size="11" fill="#4a6599">↗ REST ↗ WS</text>
           <!-- Legend -->
           <text x="435" y="340" font-size="11" fill="#aaa9a2">Legend</text>
-          <line
-            x1="435"
-            y1="358"
-            x2="475"
-            y2="358"
-            stroke="#aaa"
-            stroke-width="1"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
-          <text x="482" y="362" font-size="11" fill="#6b6a64">
-            Async / enqueue
-          </text>
-          <line
-            x1="435"
-            y1="378"
-            x2="475"
-            y2="378"
-            stroke="#888"
-            stroke-width="1.5"
-            marker-end="url(#arr)"
-          />
-          <text x="482" y="382" font-size="11" fill="#6b6a64">
-            Sync read/write
-          </text>
-          <line
-            x1="435"
-            y1="398"
-            x2="475"
-            y2="398"
-            stroke="#0f6e56"
-            stroke-width="1.2"
-            stroke-dasharray="4 3"
-            marker-end="url(#arr)"
-          />
-          <text x="482" y="402" font-size="11" fill="#6b6a64">
-            Pub/Sub push
-          </text>
+          <line x1="435" y1="358" x2="475" y2="358" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" />
+          <text x="482" y="362" font-size="11" fill="#6b6a64">Async / enqueue</text>
+          <line x1="435" y1="378" x2="475" y2="378" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" />
+          <text x="482" y="382" font-size="11" fill="#6b6a64">Sync read/write</text>
+          <line x1="435" y1="398" x2="475" y2="398" stroke="#0f6e56" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)" />
+          <text x="482" y="402" font-size="11" fill="#6b6a64">Pub/Sub push</text>
         </svg>
       </div>
+
       <div class="divider"></div>
+
       <!-- Architecture layers -->
-      <h2>Core Layers</h2>
+      <div class="section-head">
+        <h2>Core Layers</h2>
+        <div class="section-line"></div>
+      </div>
       <div class="layers">
-        <div class="layer-card">
+        <div class="layer-card" style="border-left-color: #534ab7;">
           <div class="layer-head">
-            <div class="dot" style="background: #534ab7"></div>
             <div class="layer-title">Job Queue Layer</div>
           </div>
           <ul class="layer-list">
@@ -949,38 +510,30 @@
             <li>Bull Board UI at <code>/api/admin/queues</code></li>
           </ul>
         </div>
-        <div class="layer-card">
+        <div class="layer-card" style="border-left-color: #3c3489;">
           <div class="layer-head">
-            <div class="dot" style="background: #3c3489"></div>
             <div class="layer-title">Redis Caching</div>
           </div>
           <ul class="layer-list">
-            <li>
-              Raw string for the 20–50MB active tickets payload (zero parse
-              cost)
-            </li>
+            <li>Raw string for the 20–50MB active tickets payload (zero parse cost)</li>
             <li>Hash for O(1) per-ticket lookups</li>
             <li>Distributed lock (SET NX EX) to prevent cache stampede</li>
             <li>Non-blocking SCAN for invalidation (not KEYS *)</li>
           </ul>
         </div>
-        <div class="layer-card">
+        <div class="layer-card" style="border-left-color: #993c1d;">
           <div class="layer-head">
-            <div class="dot" style="background: #993c1d"></div>
             <div class="layer-title">MongoDB</div>
           </div>
           <ul class="layer-list">
-            <li>
-              Denormalized AnalyticsTicket schema — owner/cohort pre-resolved
-            </li>
+            <li>Denormalized AnalyticsTicket schema — owner/cohort pre-resolved</li>
             <li>Cursor-based pagination (no .skip() at scale)</li>
             <li>Compound indexes aligned to query + sort patterns</li>
             <li>TTL indexes for auto-cleanup (remarks: 30d, cache: 24h)</li>
           </ul>
         </div>
-        <div class="layer-card">
+        <div class="layer-card" style="border-left-color: #0f6e56;">
           <div class="layer-head">
-            <div class="dot" style="background: #0f6e56"></div>
             <div class="layer-title">Real-Time Layer</div>
           </div>
           <ul class="layer-list">
@@ -991,9 +544,14 @@
           </ul>
         </div>
       </div>
+
       <div class="divider"></div>
+
       <!-- Key design decisions -->
-      <h2>Key Design Decisions</h2>
+      <div class="section-head">
+        <h2>Key Design Decisions</h2>
+        <div class="section-line"></div>
+      </div>
       <div class="table-wrap">
         <table>
           <thead>
@@ -1005,59 +563,32 @@
           <tbody>
             <tr>
               <td><span class="hl">BullMQ</span> over direct async calls</td>
-              <td>
-                Rate limit compliance, CPU isolation, automatic retry — 70 users
-                can't each trigger 70 DevRev API calls
-              </td>
+              <td>Rate limit compliance, CPU isolation, and automatic retry — serial API calls prevent rate limiting and keep the event loop free for user requests</td>
             </tr>
             <tr>
               <td>5 separate queues</td>
-              <td>
-                A 15-min historical sync must not block a 30-sec ticket refresh
-                — independent queues, independent failure profiles
-              </td>
+              <td>A 15-min historical sync must not block a 30-sec ticket refresh — independent queues, independent failure profiles</td>
             </tr>
             <tr>
               <td>Raw string caching for tickets</td>
-              <td>
-                Avoids 250ms of JSON.parse + stringify and ~40MB memory alloc
-                per request on a 20–50MB payload
-              </td>
+              <td>Avoids 250ms of JSON.parse + stringify and ~40MB memory alloc per request on a 20–50MB payload</td>
             </tr>
             <tr>
               <td>Cursor pagination over <span class="hl">.skip()</span></td>
-              <td>
-                .skip(10000) scans and discards 10k docs; cursor seeks directly
-                via index — O(1) vs O(N)
-              </td>
+              <td>.skip(10000) scans and discards 10k docs; cursor seeks directly via index — O(1) vs O(N)</td>
             </tr>
             <tr>
               <td>Denormalized schema</td>
-              <td>
-                Pre-resolving owner, cohort, and NOC status at write time makes
-                analytics queries instant — no N+1 lookups
-              </td>
+              <td>Pre-resolving owner, cohort, and NOC status at write time makes analytics queries instant — no N+1 lookups</td>
             </tr>
             <tr>
               <td>JWT + API Keys</td>
-              <td>
-                JWT for browser sessions (Google OAuth), scoped API keys for
-                machine-to-machine consumers — hashed with HMAC-SHA256
-              </td>
+              <td>JWT for browser sessions (Google OAuth), scoped API keys for machine-to-machine consumers — hashed with HMAC-SHA256</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <!-- Footer note -->
-      <div class="note">
-        <span class="note-icon">📋</span>
-        <span
-          >Full details in <strong>architecture-decisions.md</strong> (why every
-          decision was made) and
-          <strong>developer-guide.md</strong> (step-by-step how to modify
-          anything — add metrics, queues, filters, tabs, or cron jobs).</span
-        >
-      </div>
+
     </div>
   </body>
 </html>
